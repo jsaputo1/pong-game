@@ -42,22 +42,36 @@ export default class Game {
     );
 
     this.ball = new Ball(this.radius, this.width, this.height);
+
+    document.addEventListener("keydown", event => {
+      switch (event.key) {
+        case KEYS.spaceBar:
+          this.pause = !this.pause;
+          this.player1.speed = 10;
+          this.player2.speed = 10;
+          break;
+      }
+    });
   }
 
   render() {
     // More code goes here....
+    if (this.pause) {
+      this.player1.speed = 0;
+      this.player2.speed = 0;
+      return;
+    }
+
     this.gameElement.innerHTML = "";
 
     let svg = document.createElementNS(SVG_NS, "svg");
-
     svg.setAttributeNS(null, "width", this.width);
     svg.setAttributeNS(null, "height", this.height);
     this.gameElement.appendChild(svg);
 
     this.board.render(svg);
-
     this.player1.render(svg);
     this.player2.render(svg);
-    this.ball.render(svg);
+    this.ball.render(svg, this.player1, this.player2);
   }
 }

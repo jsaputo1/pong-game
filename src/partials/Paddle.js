@@ -1,4 +1,5 @@
 console.log("working Paddles.js");
+
 import { SVG_NS } from "../settings.js";
 
 export default class Paddle {
@@ -31,6 +32,14 @@ export default class Paddle {
     this.y = Math.min(this.boardHeight - this.height, this.y + this.speed);
   }
 
+  coordinates(x, y, width, height) {
+    let leftX = x;
+    let rightX = x + width;
+    let topY = y;
+    let bottomY = y + height;
+    return [leftX, rightX, topY, bottomY];
+  }
+
   render(svg) {
     let rect = document.createElementNS(SVG_NS, "rect");
 
@@ -42,6 +51,20 @@ export default class Paddle {
     svg.appendChild(rect);
   }
 }
+
+//   const hitLeft = this.x - this.radius <= 0;
+//   const hitRight = this.x + this.radius >= this.boardWidth;
+//   const hitTop = this.y - this.radius <= 0;
+//   const hitBottom = this.y + this.radius >= this.boardHeight;
+
+//   if (hitLeft || hitRight) {
+//     this.vx = -this.vx;
+//   }
+
+//   if (hitTop || hitBottom) {
+//     this.vy = -this.vy;
+//   }
+// }
 
 // !-- left paddle -->
 // <!-- <rect height="56" width="8" fill="white" x="10" y="100" /> -->
