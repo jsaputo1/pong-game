@@ -44,7 +44,6 @@ export default class Game {
 
     this.score1 = new Score(this.width / 2 - 50, 30, 30);
     this.score2 = new Score(this.width / 2 + 25, 30, 30);
-
     this.ball = new Ball(this.radius, this.width, this.height);
 
     document.addEventListener("keydown", event => {
@@ -60,6 +59,7 @@ export default class Game {
 
   render() {
     // More code goes here....
+
     if (this.pause) {
       this.player1.speed = 0;
       this.player2.speed = 0;

@@ -1,5 +1,6 @@
 console.log("working Ball.js");
 import { SVG_NS } from "../settings.js";
+import pingSound from "../../public/sounds/pong-01.wav";
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -7,6 +8,7 @@ export default class Ball {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.direction = 1;
+    this.ping = new Audio(pingSound);
     //resets the ball in the middle of the board
     this.reset();
   }
@@ -37,8 +39,10 @@ export default class Ball {
         this.x + this.radius <= rightX &&
         this.y >= topY &&
         this.y <= bottomY
-      )
+      ) {
+        this.ping.play;
         this.vx = -this.vx;
+      }
     } else {
       let paddle = player1.coordinates(
         player1.x,
@@ -52,8 +56,10 @@ export default class Ball {
         this.x - this.radius >= leftX &&
         this.y >= topY &&
         this.y <= bottomY
-      )
+      ) {
+        this.ping.play;
         this.vx = -this.vx;
+      }
     }
   }
 
@@ -72,10 +78,21 @@ export default class Ball {
     }
   }
 
+  //stretch goal
   goal(player) {
     player.score++;
-    console.log(player.score);
     this.reset();
+    const pScore = player.score;
+    const mScore = player.maxScore;
+    this.reset();
+    if (pScore === mScore) {
+      alert("You have won the game");
+      window.location.reload(true);
+    }
+    if (pScore >= mScore * 0.5) {
+      player.fill = "green";
+      player.height = Math.max(26, player.height - 10);
+    }
   }
 
   render(svg, player1, player2) {
@@ -89,18 +106,18 @@ export default class Ball {
     circle.setAttributeNS(null, "cx", this.x);
     circle.setAttributeNS(null, "cy", this.y);
     circle.setAttributeNS(null, "fill", "white");
+
     svg.appendChild(circle);
 
     const rightGoal = this.x + this.radius >= this.boardWidth;
     const leftGoal = this.x - this.radius <= 0;
+
     if (rightGoal) {
       this.goal(player1);
       this.diretion = 1;
-      console.log("player 1 scored");
     } else if (leftGoal) {
       this.goal(player2);
       this.direction = -1;
-      console.log("player 2 scored");
     }
   }
 }

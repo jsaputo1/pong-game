@@ -11,6 +11,9 @@ export default class Paddle {
     this.y = y;
     this.speed = 10;
     this.score = 0;
+    this.fill = "white";
+    //max score
+    this.maxScore = 12;
 
     document.addEventListener("keydown", event => {
       switch (event.key) {
@@ -24,13 +27,20 @@ export default class Paddle {
     });
   }
 
+  //stretch goal
   up() {
     this.y = Math.max(0, this.y - this.speed);
+    if (this.y === 0) {
+      this.y = 256;
+    }
   }
-
   down() {
     this.y = Math.min(this.boardHeight - this.height, this.y + this.speed);
+    if (this.y === 200) {
+      this.y = -56;
+    }
   }
+  //
 
   coordinates(x, y, width, height) {
     let leftX = x;
@@ -47,27 +57,8 @@ export default class Paddle {
     rect.setAttributeNS(null, "y", this.y);
     rect.setAttributeNS(null, "width", this.width);
     rect.setAttributeNS(null, "height", this.height);
-    rect.setAttributeNS(null, "fill", "white");
+    rect.setAttributeNS(null, "fill", this.fill);
+
     svg.appendChild(rect);
   }
 }
-
-//   const hitLeft = this.x - this.radius <= 0;
-//   const hitRight = this.x + this.radius >= this.boardWidth;
-//   const hitTop = this.y - this.radius <= 0;
-//   const hitBottom = this.y + this.radius >= this.boardHeight;
-
-//   if (hitLeft || hitRight) {
-//     this.vx = -this.vx;
-//   }
-
-//   if (hitTop || hitBottom) {
-//     this.vy = -this.vy;
-//   }
-// }
-
-// !-- left paddle -->
-// <!-- <rect height="56" width="8" fill="white" x="10" y="100" /> -->
-// <!-- right paddle -->
-
-// const boardHeight = "";
