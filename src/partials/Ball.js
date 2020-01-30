@@ -72,6 +72,12 @@ export default class Ball {
     }
   }
 
+  goal(player) {
+    player.score++;
+    console.log(player.score);
+    this.reset();
+  }
+
   render(svg, player1, player2) {
     this.x += this.vx;
     this.y += this.vy;
@@ -83,7 +89,18 @@ export default class Ball {
     circle.setAttributeNS(null, "cx", this.x);
     circle.setAttributeNS(null, "cy", this.y);
     circle.setAttributeNS(null, "fill", "white");
-
     svg.appendChild(circle);
+
+    const rightGoal = this.x + this.radius >= this.boardWidth;
+    const leftGoal = this.x - this.radius <= 0;
+    if (rightGoal) {
+      this.goal(player1);
+      this.diretion = 1;
+      console.log("player 1 scored");
+    } else if (leftGoal) {
+      this.goal(player2);
+      this.direction = -1;
+      console.log("player 2 scored");
+    }
   }
 }
