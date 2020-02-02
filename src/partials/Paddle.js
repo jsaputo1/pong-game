@@ -12,8 +12,8 @@ export default class Paddle {
     this.speed = 10;
     this.score = 0;
     this.fill = "white";
-    //max score
-    this.maxScore = 12;
+    //Setting score limit
+    this.maxScore = 10;
 
     document.addEventListener("keydown", event => {
       switch (event.key) {
@@ -27,7 +27,7 @@ export default class Paddle {
     });
   }
 
-  //stretch goal
+  //Paddle wrap
   up() {
     this.y = Math.max(0, this.y - this.speed);
     if (this.y === 0) {

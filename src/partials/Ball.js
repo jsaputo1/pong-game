@@ -1,6 +1,5 @@
 console.log("working Ball.js");
 import { SVG_NS } from "../settings.js";
-import pingSound from "../../public/sounds/pong-01.wav";
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -8,7 +7,6 @@ export default class Ball {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.direction = 1;
-    this.ping = new Audio(pingSound);
     //resets the ball in the middle of the board
     this.reset();
   }
@@ -40,7 +38,6 @@ export default class Ball {
         this.y >= topY &&
         this.y <= bottomY
       ) {
-        this.ping.play;
         this.vx = -this.vx;
       }
     } else {
@@ -57,7 +54,6 @@ export default class Ball {
         this.y >= topY &&
         this.y <= bottomY
       ) {
-        this.ping.play;
         this.vx = -this.vx;
       }
     }
@@ -78,7 +74,7 @@ export default class Ball {
     }
   }
 
-  //stretch goal
+  //Modifications to paddle based on score
   goal(player) {
     player.score++;
     this.reset();
@@ -89,9 +85,10 @@ export default class Ball {
       alert("You have won the game");
       window.location.reload(true);
     }
-    if (pScore >= mScore * 0.5) {
+    if (pScore === 8) {
       player.fill = "green";
-      player.height = Math.max(26, player.height - 10);
+      alert("You are 2 points from Victory");
+      player.height = player.height - 10;
     }
   }
 
